@@ -1,0 +1,332 @@
+{% extends "base.html" %}
+
+{% block title %}Drug Classification - Home{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-4 fw-bold text-primary mb-4">
+                <i class="fas fa-pills me-3"></i>
+                Drug Classification System
+            </h1>
+            <p class="lead text-muted mb-4">
+                Prediksi jenis obat yang tepat berdasarkan karakteristik pasien menggunakan Machine Learning
+            </p>
+            <div class="alert alert-info" role="alert">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Model:</strong> Decision Tree dengan akurasi tinggi untuk klasifikasi obat
+            </div>
+        </div>
+    </div>
+
+    <!-- Prediction Form -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-calculator me-2"></i>
+                        Prediksi Jenis Obat
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    <form id="predictionForm">
+                        <div class="row">
+                            <!-- Age -->
+                            <div class="col-md-6 mb-3">
+                                <label for="age" class="form-label">
+                                    <i class="fas fa-birthday-cake me-1"></i>
+                                    Usia (Age)
+                                </label>
+                                <input type="number" class="form-control" id="age" name="age" 
+                                       min="1" max="100" required placeholder="Masukkan usia">
+                            </div>
+
+                            <!-- Sex -->
+                            <div class="col-md-6 mb-3">
+                                <label for="sex" class="form-label">
+                                    <i class="fas fa-venus-mars me-1"></i>
+                                    Jenis Kelamin (Sex)
+                                </label>
+                                <select class="form-select" id="sex" name="sex" required>
+                                    <option value="">Pilih jenis kelamin</option>
+                                    <option value="F">Female (Perempuan)</option>
+                                    <option value="M">Male (Laki-laki)</option>
+                                </select>
+                            </div>
+
+                            <!-- Blood Pressure -->
+                            <div class="col-md-6 mb-3">
+                                <label for="bp" class="form-label">
+                                    <i class="fas fa-heartbeat me-1"></i>
+                                    Tekanan Darah (BP)
+                                </label>
+                                <select class="form-select" id="bp" name="bp" required>
+                                    <option value="">Pilih tekanan darah</option>
+                                    <option value="LOW">LOW (Rendah)</option>
+                                    <option value="NORMAL">NORMAL (Normal)</option>
+                                    <option value="HIGH">HIGH (Tinggi)</option>
+                                </select>
+                            </div>
+
+                            <!-- Cholesterol -->
+                            <div class="col-md-6 mb-3">
+                                <label for="cholesterol" class="form-label">
+                                    <i class="fas fa-tint me-1"></i>
+                                    Kolesterol (Cholesterol)
+                                </label>
+                                <select class="form-select" id="cholesterol" name="cholesterol" required>
+                                    <option value="">Pilih tingkat kolesterol</option>
+                                    <option value="NORMAL">NORMAL (Normal)</option>
+                                    <option value="HIGH">HIGH (Tinggi)</option>
+                                </select>
+                            </div>
+
+                            <!-- Na_to_K -->
+                            <div class="col-md-12 mb-4">
+                                <label for="na_to_k" class="form-label">
+                                    <i class="fas fa-flask me-1"></i>
+                                    Rasio Na to K (Na_to_K)
+                                </label>
+                                <input type="number" class="form-control" id="na_to_k" name="na_to_k" 
+                                       step="0.001" min="0" max="50" required 
+                                       placeholder="Masukkan rasio Na to K">
+                                <div class="form-text">Rasio natrium terhadap kalium dalam darah</div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg" id="predictBtn">
+                                <i class="fas fa-magic me-2"></i>
+                                Prediksi Jenis Obat
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <div id="resultsSection" class="row mt-5" style="display: none;">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-chart-line me-2"></i>
+                        Hasil Prediksi
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Prediction Result -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="alert alert-success" role="alert">
+                                <h5 class="alert-heading">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    Prediksi Obat
+                                </h5>
+                                <p class="mb-0" id="predictionResult"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="alert alert-info" role="alert">
+                                <h5 class="alert-heading">
+                                    <i class="fas fa-percentage me-2"></i>
+                                    Tingkat Kepercayaan
+                                </h5>
+                                <p class="mb-0" id="confidenceLevel"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Probability Chart -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="mb-3">
+                                <i class="fas fa-chart-pie me-2"></i>
+                                Probabilitas Obat
+                            </h5>
+                            <canvas id="probabilityChart" width="400" height="300"></canvas>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="mb-3">
+                                <i class="fas fa-chart-bar me-2"></i>
+                                Feature Importance
+                            </h5>
+                            <canvas id="importanceChart" width="400" height="300"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Input Summary -->
+                    <div class="mt-4">
+                        <h5 class="mb-3">
+                            <i class="fas fa-list me-2"></i>
+                            Ringkasan Input
+                        </h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Fitur</th>
+                                        <th>Nilai</th>
+                                        <th>Importance (%)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="inputSummary">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="text-center mt-4" style="display: none;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2">Memproses prediksi...</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('predictionForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Show loading spinner
+    document.getElementById('loadingSpinner').style.display = 'block';
+    document.getElementById('resultsSection').style.display = 'none';
+    
+    // Get form data
+    const formData = new FormData(this);
+    
+    // Send prediction request
+    fetch('/predict', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Hide loading spinner
+        document.getElementById('loadingSpinner').style.display = 'none';
+        
+        if (data.error) {
+            alert('Error: ' + data.error);
+            return;
+        }
+        
+        // Display results
+        displayResults(data);
+    })
+    .catch(error => {
+        document.getElementById('loadingSpinner').style.display = 'none';
+        alert('Terjadi kesalahan: ' + error);
+    });
+});
+
+function displayResults(data) {
+    // Show results section
+    document.getElementById('resultsSection').style.display = 'block';
+    
+    // Display prediction
+    document.getElementById('predictionResult').textContent = data.prediction;
+    
+    // Display confidence level
+    const maxProb = Math.max(...Object.values(data.probabilities));
+    document.getElementById('confidenceLevel').textContent = maxProb + '%';
+    
+    // Create probability chart
+    createProbabilityChart(data.probabilities);
+    
+    // Create importance chart
+    createImportanceChart(data.feature_importance);
+    
+    // Display input summary
+    displayInputSummary(data.input_data, data.feature_importance);
+}
+
+function createProbabilityChart(probabilities) {
+    const ctx = document.getElementById('probabilityChart').getContext('2d');
+    
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: Object.keys(probabilities),
+            datasets: [{
+                data: Object.values(probabilities),
+                backgroundColor: [
+                    '#FF6384',
+                    '#36A2EB',
+                    '#FFCE56',
+                    '#4BC0C0',
+                    '#9966FF'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+}
+
+function createImportanceChart(importance) {
+    const ctx = document.getElementById('importanceChart').getContext('2d');
+    
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(importance),
+            datasets: [{
+                label: 'Importance (%)',
+                data: Object.values(importance),
+                backgroundColor: '#36A2EB'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+}
+
+function displayInputSummary(inputData, importance) {
+    const tbody = document.getElementById('inputSummary');
+    tbody.innerHTML = '';
+    
+    const features = [
+        { name: 'Age', value: inputData.age },
+        { name: 'Sex', value: inputData.sex },
+        { name: 'BP', value: inputData.bp },
+        { name: 'Cholesterol', value: inputData.cholesterol },
+        { name: 'Na_to_K', value: inputData.na_to_k }
+    ];
+    
+    features.forEach(feature => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${feature.name}</td>
+            <td>${feature.value}</td>
+            <td>${importance[feature.name]}%</td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+</script>
+{% endblock %}

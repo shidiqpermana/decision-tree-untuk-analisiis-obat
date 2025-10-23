@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+
+{% block title %}About - Drug Classification System{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-4 fw-bold text-primary mb-4">
+                <i class="fas fa-info-circle me-3"></i>
+                Tentang Sistem
+            </h1>
+            <p class="lead text-muted">
+                Sistem Klasifikasi Obat berbasis Machine Learning untuk prediksi obat yang tepat
+            </p>
+        </div>
+    </div>
+
+    <!-- System Overview -->
+    <div class="row mb-5">
+        <div class="col-lg-10 mx-auto">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-cogs me-2"></i>
+                        Overview Sistem
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    <p class="lead">
+                        Sistem ini menggunakan algoritma <strong>Decision Tree</strong> untuk memprediksi jenis obat 
+                        yang tepat berdasarkan karakteristik pasien. Model dilatih menggunakan dataset yang berisi 
+                        informasi pasien dan jenis obat yang diberikan.
+                    </p>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h5 class="text-primary">
+                                <i class="fas fa-database me-2"></i>
+                                Dataset
+                            </h5>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>200 sampel data</li>
+                                <li><i class="fas fa-check text-success me-2"></i>5 jenis obat (drugA, drugB, drugC, drugX, drugY)</li>
+                                <li><i class="fas fa-check text-success me-2"></i>5 fitur input (Age, Sex, BP, Cholesterol, Na_to_K)</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-primary">
+                                <i class="fas fa-brain me-2"></i>
+                                Model
+                            </h5>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Decision Tree Classifier</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Max Depth: 3</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Akurasi tinggi dengan generalisasi baik</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <div class="row mb-5">
+        <div class="col-lg-10 mx-auto">
+            <h2 class="text-center mb-4">
+                <i class="fas fa-star me-2"></i>
+                Fitur Sistem
+            </h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-calculator fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Prediksi Real-time</h5>
+                            <p class="card-text">Prediksi jenis obat secara instan berdasarkan input pasien</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-chart-pie fa-3x text-success mb-3"></i>
+                            <h5 class="card-title">Probabilitas Obat</h5>
+                            <p class="card-text">Visualisasi probabilitas untuk setiap jenis obat</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-chart-bar fa-3x text-info mb-3"></i>
+                            <h5 class="card-title">Feature Importance</h5>
+                            <p class="card-text">Analisis pentingnya setiap fitur dalam prediksi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input Features -->
+    <div class="row mb-5">
+        <div class="col-lg-10 mx-auto">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-info text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-list me-2"></i>
+                        Fitur Input
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-birthday-cake fa-2x text-primary me-3"></i>
+                                <div>
+                                    <h6 class="mb-1">Age (Usia)</h6>
+                                    <small class="text-muted">Usia pasien dalam tahun</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-venus-mars fa-2x text-primary me-3"></i>
+                                <div>
+                                    <h6 class="mb-1">Sex (Jenis Kelamin)</h6>
+                                    <small class="text-muted">F (Female) atau M (Male)</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-heartbeat fa-2x text-primary me-3"></i>
+                                <div>
+                                    <h6 class="mb-1">BP (Tekanan Darah)</h6>
+                                    <small class="text-muted">LOW, NORMAL, atau HIGH</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-tint fa-2x text-primary me-3"></i>
+                                <div>
+                                    <h6 class="mb-1">Cholesterol (Kolesterol)</h6>
+                                    <small class="text-muted">NORMAL atau HIGH</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-flask fa-2x text-primary me-3"></i>
+                                <div>
+                                    <h6 class="mb-1">Na_to_K (Rasio Na to K)</h6>
+                                    <small class="text-muted">Rasio natrium terhadap kalium dalam darah</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Output Classes -->
+    <div class="row mb-5">
+        <div class="col-lg-10 mx-auto">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-pills me-2"></i>
+                        Jenis Obat yang Dapat Diprediksi
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="alert alert-primary" role="alert">
+                                <h6 class="alert-heading">Drug A</h6>
+                                <p class="mb-0">Obat untuk kondisi tertentu</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="alert alert-success" role="alert">
+                                <h6 class="alert-heading">Drug B</h6>
+                                <p class="mb-0">Obat untuk kondisi tertentu</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="alert alert-info" role="alert">
+                                <h6 class="alert-heading">Drug C</h6>
+                                <p class="mb-0">Obat untuk kondisi tertentu</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="alert alert-warning" role="alert">
+                                <h6 class="alert-heading">Drug X</h6>
+                                <p class="mb-0">Obat untuk kondisi tertentu</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="alert alert-danger" role="alert">
+                                <h6 class="alert-heading">Drug Y</h6>
+                                <p class="mb-0">Obat untuk kondisi tertentu</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technical Details -->
+    <div class="row mb-5">
+        <div class="col-lg-10 mx-auto">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-code me-2"></i>
+                        Detail Teknis
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Framework & Library</h6>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Flask (Web Framework)</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Scikit-learn (ML Library)</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Pandas (Data Processing)</li>
+                                <li><i class="fas fa-check text-success me-2"></i>NumPy (Numerical Computing)</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Joblib (Model Persistence)</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Model Performance</h6>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Decision Tree Classifier</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Max Depth: 3</li>
+                                <li><i class="fas fa-check text-success me-2"></i>High Accuracy</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Good Generalization</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Interpretable Results</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="alert alert-warning" role="alert">
+                <h5 class="alert-heading">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Disclaimer
+                </h5>
+                <p class="mb-0">
+                    <strong>Peringatan:</strong> Sistem ini hanya untuk tujuan edukasi dan penelitian. 
+                    Prediksi obat harus selalu dikonsultasikan dengan tenaga medis profesional. 
+                    Jangan menggunakan hasil prediksi ini sebagai pengganti konsultasi medis yang sebenarnya.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
